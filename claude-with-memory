@@ -1,0 +1,23 @@
+#!/bin/bash
+# Claude Code with Memory System
+# This script generates context before starting Claude Code
+
+echo "🧠 Claude Code Memory System"
+echo "============================"
+
+# Generate context
+echo "📝 Generating context from previous sessions..."
+~/context-plus/context-engineering-intro/venv_linux/bin/python ~/context-plus/context-engineering-intro/scripts/claude_helper.py > ~/context-plus/context-engineering-intro/current_context.md
+
+# Show preview
+echo -e "\n📋 Context preview:"
+echo "--------------------"
+head -20 ~/context-plus/context-engineering-intro/current_context.md
+echo "..."
+echo "--------------------"
+
+# Instructions
+echo -e "\n✅ Context ready! Starting Claude Code with memory context...\n"
+
+# Start Claude with the context file contents as the first message
+cat ~/context-plus/context-engineering-intro/current_context.md | claude "$@"
